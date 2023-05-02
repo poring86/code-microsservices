@@ -1,0 +1,8 @@
+@startuml
+:Admin: -> (Criar categoria)
+:Admin: -> (Atualizar categoria)
+:Admin: -> (Excluir categoria)
+:Admin: -> (Excluir categoria)
+@enduml
+
+client fazer
