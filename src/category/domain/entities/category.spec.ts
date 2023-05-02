@@ -1,16 +1,12 @@
 import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
 import { Category, CategoryProps } from "./category";
 import { omit } from "lodash";
-import { type } from "os";
-import { validate as uuidValidate } from "uuid";
 
 describe("Category Test", () => {
   test("constructor of category", () => {
     // Triple AAA - Arrange Act Assert
     let category = new Category({ name: "Movie" });
-    let props = omit(category.props, "created_at");
-
-    console.log("category", category);
+    omit(category.props, "created_at");
 
     expect(category.props).toStrictEqual({
       name: "Movie",
