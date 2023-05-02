@@ -1,3 +1,4 @@
+import UniqueEntityId from "../../../@seedwork/domain/unique-entity-id.vo";
 import { Category, CategoryProps } from "./category";
 import { omit } from "lodash";
 import { type } from "os";
@@ -66,18 +67,18 @@ describe("Category Test", () => {
   });
 
   test("id field", () => {
-    type CategoryData = { props: CategoryProps; id?: string };
+    type CategoryData = { props: CategoryProps; id?: UniqueEntityId };
     const data: CategoryData[] = [
       { props: { name: "Movie" } },
       { props: { name: "Movie" }, id: null },
       { props: { name: "Movie" }, id: undefined },
-      { props: { name: "Movie" }, id: "41258db4-99dc-4280-9949-60a637ea6623" },
+      { props: { name: "Movie" }, id: new UniqueEntityId() },
     ];
 
     data.forEach((i) => {
       const category = new Category(i.props, i.id);
       expect(category.id).not.toBeNull();
-      expect(uuidValidate(category.id)).toBeTruthy();
+      expect(category.id).toBeInstanceOf(UniqueEntityId);
     });
   });
 
