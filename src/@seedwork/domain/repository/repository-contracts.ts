@@ -46,11 +46,11 @@ export class SearchParams {
     this._page = _page;
   }
 
-  private get per_page() {
-    return this._page;
+  get per_page() {
+    return this._per_page;
   }
   private set per_page(value: number) {
-    let _per_page = +value;
+    let _per_page = value === (true as any) ? this._per_page : +value;
 
     if (
       Number.isNaN(_per_page) ||
@@ -76,11 +76,11 @@ export class SearchParams {
   }
   private set sort_dir(value: string | null) {
     if (!this.sort) {
-      this.sort_dir = null;
+      this._sort_dir = null;
       return;
     }
     const dir = `${value}`.toLowerCase();
-    this.sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
+    this._sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
   }
 
   get filter() {
