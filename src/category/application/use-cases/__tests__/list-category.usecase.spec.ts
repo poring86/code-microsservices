@@ -3,7 +3,7 @@ import { CategoryRepository } from "../../../domain/repository/category.reposito
 import CategoryInMemoryRepository from "../../../infra/repository/category-in-memory.repository";
 import ListCategoriesUseCase from "../list-category.usecase";
 
-describe("ListCategoryUsecase Unit Tests", () => {
+describe("ListCategoriesUseCase Unit Tests", () => {
   let useCase: ListCategoriesUseCase;
   let repository: CategoryInMemoryRepository;
 

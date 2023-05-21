@@ -3,9 +3,8 @@ import { CategoryOutput, CategoryOutputMapper } from "../dto/category.output";
 import UseCase from "../../../@seedwork/application/use-case";
 import {
   PaginationOutputDto,
-  ParginationOutputMapper,
+  PaginationOutputMapper,
 } from "../../../@seedwork/application/dto/pagination-output";
-import { SearchResult } from "../../../@seedwork/domain/repository/repository-contracts";
 import { SearchInputDto } from "../../../@seedwork/application/dto/search-input";
 
 export default class ListCategoriesUseCase implements UseCase<Input, Output> {
@@ -22,11 +21,7 @@ export default class ListCategoriesUseCase implements UseCase<Input, Output> {
     const items = searchResult.items.map((i) => {
       return CategoryOutputMapper.toOutput(i);
     });
-    const pagination = ParginationOutputMapper.toOutput(searchResult);
-    return {
-      items,
-      ...pagination,
-    };
+    return PaginationOutputMapper.toOutput(items, searchResult);
   }
 }
 
