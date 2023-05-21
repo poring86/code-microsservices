@@ -13,8 +13,8 @@ export type CategoryProperties = {
 
 export class Category extends Entity<CategoryProperties> {
   constructor(public readonly props: CategoryProperties, id?: UniqueEntityId) {
-    Category.validate(props);
     super(props, id);
+    Category.validate(props);
     this.props.description = this.description ?? null;
     this.props.is_active = this.is_active ?? true;
     this.props.created_at = this.created_at ?? new Date();
