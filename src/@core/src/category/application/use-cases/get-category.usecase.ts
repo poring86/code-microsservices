@@ -2,8 +2,8 @@ import {default as DefaultUseCase} from "../../../@seedwork/application/use-case
 import CategoryRepository from "../../domain/repository/category.repository";
 import { CategoryOutput } from "../dto/category.output";
 
-export namespace GetCategoryUsecase{
-  export class Usecase implements DefaultUseCase<Input, Output> {
+export namespace GetCategoryUseCase{
+  export class UseCase implements DefaultUseCase<Input, Output> {
     constructor(private categoryRepo: CategoryRepository.Repository) {}
     async execute(input: Input): Promise<Output> {
       const entity = await this.categoryRepo.findById(input.id);
@@ -25,5 +25,5 @@ export namespace GetCategoryUsecase{
   export type Output = CategoryOutput;
 }
 
-export default GetCategoryUsecase
+export default GetCategoryUseCase
 

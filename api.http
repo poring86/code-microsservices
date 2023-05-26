@@ -1,2 +1,33 @@
 ### Test
 GET http://localhost:3000
+
+###
+GET http://localhost:3000/categories
+
+###
+GET http://localhost:3000/categories/
+
+###
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "Movie"
+}
+
+###
+PUT http://localhost:3000/categories/
+Content-Type: application/json
+
+{
+  "name": "Movie"
+}
+
+
+###
+DELETE  http://localhost:3000/categories/
+Content-Type: application/json
+
+{
+  "name": "Movie"
+}
