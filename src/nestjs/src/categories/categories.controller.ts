@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   HttpCode,
+  Inject,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -18,18 +19,24 @@ import {
   DeleteCategoryUseCase,
   GetCategoryUseCase,
 } from '@fc/micro-videos/category/application';
-import { SearchParams } from '@fc/micro-videos/dist/@seedwork/domain/repository/repository-contracts';
 import { SearchCategoryDto } from './dto/search-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(
-    private createUseCase: CreateCategoryUseCase.UseCase,
-    private updateUseCase: UpdateCategoryUseCase.UseCase,
-    private listUseCase: ListCategoriesUseCase.UseCase,
-    private deleteUseCase: DeleteCategoryUseCase.UseCase,
-    private getUseCase: GetCategoryUseCase.UseCase,
-  ) {}
+  @Inject(CreateCategoryUseCase.UseCase)
+  private createUseCase: CreateCategoryUseCase.UseCase;
+
+  @Inject(CreateCategoryUseCase.UseCase)
+  private updateUseCase: UpdateCategoryUseCase.UseCase;
+
+  @Inject(ListCategoriesUseCase.UseCase)
+  private listUseCase: ListCategoriesUseCase.UseCase;
+
+  @Inject(DeleteCategoryUseCase.UseCase)
+  private deleteUseCase: DeleteCategoryUseCase.UseCase;
+
+  @Inject(GetCategoryUseCase.UseCase)
+  private getUseCase: GetCategoryUseCase.UseCase;
 
   @Post()
   create(@Body() createCategoryDto: CreateCategoryDto) {
