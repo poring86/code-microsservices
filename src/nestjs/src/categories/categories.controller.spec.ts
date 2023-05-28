@@ -30,7 +30,7 @@ describe('CategoriesController unit tests', () => {
       execute: jest.fn().mockReturnValue(expectedOutput),
     };
 
-    //@ts-expect-error
+    //@ts-expect-error defined part of methods
     controller['createUseCase'] = mockCreateUseCase;
     const input: CreateCategoryDto = {
       name: 'Movie',
