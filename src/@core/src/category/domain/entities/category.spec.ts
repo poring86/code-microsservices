@@ -68,17 +68,17 @@ describe("Category Test", () => {
     });
   });
 
-  test("id field", () => {
+  describe("id field", () => {
     type CategoryData = { props: CategoryProperties; id?: UniqueEntityId };
-    const data: CategoryData[] = [
+    const arrange: CategoryData[] = [
       { props: { name: "Movie" } },
       { props: { name: "Movie" }, id: null },
       { props: { name: "Movie" }, id: undefined },
       { props: { name: "Movie" }, id: new UniqueEntityId() },
     ];
 
-    data.forEach((i) => {
-      const category = new Category(i.props, i.id);
+    test.each(arrange)("when props is %p", (item) => {
+      const category = new Category(item.props, item.id as any);
       expect(category.id).not.toBeNull();
       expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     });

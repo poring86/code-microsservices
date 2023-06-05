@@ -1,6 +1,6 @@
 import ValueObject from "../value-object";
 
-class StubValueObject extends ValueObject {}
+class StubValueObject extends ValueObject { }
 
 describe("Value Object Unit Tests", () => {
   it("should set value", () => {
@@ -28,11 +28,14 @@ describe("Value Object Unit Tests", () => {
       },
     ];
 
+    test.each(arrange)("from $received to $expected", ({ received, expected }) => {
+      const vo = new StubValueObject(received);
+      expect(vo + "").toBe(expected);
+    })
     test.each(arrange)(
       "from $received to $expected",
       ({ received, expected }) => {
-        const vo = new StubValueObject(received);
-        expect(vo + "").toBe(expected);
+
       }
     );
   });
