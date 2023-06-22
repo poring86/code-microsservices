@@ -1,6 +1,6 @@
 
 import { CategorySequelize } from "#category/infra/db/sequelize/category-sequelize";
-import { setupSequelize } from "#seedwork/infra/testing/db";
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
 import { CreateCategoryUseCase } from "../../create-category.usecase";
 const { CategoryRepository, CategoryModel } = CategorySequelize;
 
@@ -8,7 +8,7 @@ describe("CreateCategoryUsecase Integration Tests", () => {
   let useCase: CreateCategoryUseCase.UseCase;
   let repository: CategorySequelize.CategoryRepository;
 
-  setupSequelize({ models: [CategoryModel] })
+  setupSequelize({ models: [CategoryModel] });
 
   beforeEach(() => {
     repository = new CategoryRepository(CategoryModel);
@@ -82,3 +82,4 @@ describe("CreateCategoryUsecase Integration Tests", () => {
     });
   });
 });
+

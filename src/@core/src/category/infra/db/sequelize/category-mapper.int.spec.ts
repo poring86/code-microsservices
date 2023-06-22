@@ -2,7 +2,7 @@
 import { LoadEntityError } from "#seedwork/domain/errors/load-entity.error"
 import { Category } from "#category/domain"
 import UniqueEntityId from "#seedwork/domain/value-objects/unique-entity-id.vo"
-import { setupSequelize } from "#seedwork/infra/testing/db"
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db"
 import { CategorySequelize } from "./category-sequelize"
 
 describe("CategoryModelMapper Unit Tests", () => {

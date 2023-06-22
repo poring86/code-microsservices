@@ -2,7 +2,7 @@
 import { CategorySequelize } from "#category/infra/db/sequelize/category-sequelize";
 import ListCategoriesUseCase from "../../list-category.usecase";
 import _chance from "chance";
-import { setupSequelize } from "#seedwork/infra/testing/db";
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
 
 const { CategoryModel, CategoryRepository } = CategorySequelize
 

@@ -4,7 +4,9 @@
   "description": "admin do catalago de videos",
   "main": "index.js",
   "imports": {
+    "#seedwork/domain": "./dist/@seedwork/domain/index.js",
     "#seedwork/*": "./dist/@seedwork/*.js",
+    "#category/domain": "./dist/category/domain/index.js",
     "#category/*": "./dist/category/*.js"
   },
   "exports": {
@@ -69,7 +71,9 @@
     "@types/uuid": "^9.0.1",
     "chance": "^1.1.11",
     "class-validator": "^0.14.0",
+    "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
+    "mysql2": "^3.4.0",
     "sequelize": "^6.31.1",
     "sequelize-typescript": "^2.1.5",
     "sqlite3": "^5.1.6",

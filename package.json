@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@nestjs/config": "^3.0.0",
     "create-ts-index": "^1.14.0",
     "jest": "^29.5.0"
   },
@@ -11,7 +12,6 @@
     "./src/@core",
     "./src/nestjs"
   ],
-  "devDependencies": {},
   "scripts": {
     "prestart:dev": "npm run build -w @fc/micro-videos",
     "start:dev": "npm run build:w -w @fc/micro-videos & npm run start:dev -w nestjs",

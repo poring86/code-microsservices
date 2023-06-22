@@ -2,7 +2,7 @@ import { CategorySequelize } from "./category-sequelize"
 import { Category, CategoryRepository } from "#category/domain"
 import NotFoundError from "#seedwork/domain/errors/not-found.error"
 import UniqueEntityId from "#seedwork/domain/value-objects/unique-entity-id.vo"
-import { setupSequelize } from "#seedwork/infra/testing/db"
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db"
 import _chance from "chance"
 const { CategoryModel, CategoryModelMapper, CategoryRepository: CategorySequelizeRepository } = CategorySequelize
 

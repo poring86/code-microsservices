@@ -3,8 +3,15 @@ import { CategoriesService } from './categories.service';
 import { CategoriesController } from './categories.controller';
 
 import { CATEGORY_PROVIDERS } from './category.providers';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { CategorySequelize } from '@fc/micro-videos/category/infra';
+import { getModelToken } from '@nestjs/sequelize';
 
 @Module({
+  imports: [
+    SequelizeModule.forFeature([CategorySequelize.CategoryModel]),
+    SequelizeModule.forFeature([CategorySequelize.CategoryModel])
+  ],
   controllers: [CategoriesController],
   providers: [
     CategoriesService,

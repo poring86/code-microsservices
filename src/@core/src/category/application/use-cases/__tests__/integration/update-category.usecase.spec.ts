@@ -4,7 +4,7 @@ import _chance from "chance";
 import { UpdateCategoryUseCase } from "../../update-category.usecase";
 import { Category } from "#category/domain";
 import { NotFoundError } from "#seedwork/domain/errors/not-found.error";
-import { setupSequelize } from "#seedwork/infra/testing/db";
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
 
 const { CategoryModel, CategoryRepository } = CategorySequelize
 

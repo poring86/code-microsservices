@@ -1,6 +1,6 @@
 import { CategorySequelize } from "#category/infra/db/sequelize/category-sequelize";
 import { NotFoundError } from "#seedwork/domain/errors/not-found.error";
-import { setupSequelize } from "#seedwork/infra/testing/db";
+import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
 
 import DeleteCategoryUseCase from "../../delete-category.usecase";
 
