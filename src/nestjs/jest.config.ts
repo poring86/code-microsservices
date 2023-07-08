@@ -16,11 +16,20 @@ export default {
   collectCoverageFrom: [
     "**/*.(t|j)s"
   ],
-  coverageDirectory: "../coverage",
+  coverageProvider: "v8",
+  coverageDirectory: "../__coverage",
   testEnvironment: "node",
   setupFilesAfterEnv: [
     "../../@core/src/@seedwork/domain/tests/jest.ts",
   ],
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80
+    },
+  },
   moduleNameMapper: {
     '@fc/micro\\-videos/(.*)$': '<rootDir>/../../../node_modules/@fc/micro-videos/dist/$1',
     // "#seedwork/domain": "<rootDir>/../../../@seedwork/application/index.js",

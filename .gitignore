@@ -4,3 +4,4 @@ tsconfig.tsbuildinfo
 .lh/
 .docker/zsh/history/.zsh_history
 __coverage/
+.sqlite

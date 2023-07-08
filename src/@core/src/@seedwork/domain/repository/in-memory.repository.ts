@@ -12,6 +12,9 @@ import {
 export abstract class InMemoryRepository<E extends Entity>
   implements RepositoryInterface<E>
 {
+  bulkInsert(entities: E[]): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
   items: E[] = [];
 
   async insert(entity: any): Promise<void> {

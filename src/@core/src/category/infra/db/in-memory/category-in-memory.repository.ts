@@ -7,6 +7,9 @@ import { SortDirection } from "#seedwork/domain/repository/repository-contracts"
 export class CategoryInMemoryRepository
   extends InMemorySearchableRepository<Category>
   implements CategoryRepository.Repository {
+  bulkInsert(entities: Category[]): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
   sortableFields: string[] = ["name", "created_at"];
 
   protected async applyFilter(

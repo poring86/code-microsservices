@@ -2,9 +2,9 @@
 import { CategorySequelize } from "#category/infra/db/sequelize/category-sequelize";
 import _chance from "chance";
 import { UpdateCategoryUseCase } from "../../update-category.usecase";
-import { Category } from "#category/domain";
 import { NotFoundError } from "#seedwork/domain/errors/not-found.error";
 import { setupSequelize } from "#seedwork/infra/testing/helpers/db";
+import { CategoryFakeBuilder } from "#category/domain/entities/category-fake-builder";
 
 const { CategoryModel, CategoryRepository } = CategorySequelize
 
@@ -26,15 +26,16 @@ describe("UpdteCategoryUsecase Integration Tests", () => {
   });
 
   it("should update a category", async () => {
-    const model = (await CategoryModel.factory().create()).toJSON()
+    const entity = CategoryFakeBuilder.aCategory().build()
+    repository.insert(entity)
 
-    let output = await useCase.execute({ id: model.id, name: "test" });
+    let output = await useCase.execute({ id: entity.id, name: "test" });
     expect(output).toStrictEqual({
-      id: model.id,
+      id: entity.id,
       name: "test",
       description: null,
       is_active: true,
-      created_at: model.created_at,
+      created_at: entity.created_at,
     });
 
     type Arrange = {
@@ -56,85 +57,85 @@ describe("UpdteCategoryUsecase Integration Tests", () => {
     const arrange: Arrange[] = [
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: "some description",
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: "some description",
           is_active: true,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: null,
           is_active: true,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           is_active: false,
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: null,
           is_active: false,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: null,
           is_active: false,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           is_active: true,
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: null,
           is_active: true,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
       {
         input: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: "some description",
           is_active: false,
         },
         expected: {
-          id: model.id,
+          id: entity.id,
           name: "test",
           description: "some description",
           is_active: false,
-          created_at: model.created_at,
+          created_at: entity.created_at,
         },
       },
     ];
@@ -147,7 +148,7 @@ describe("UpdteCategoryUsecase Integration Tests", () => {
         is_active: i.input.is_active,
       });
       expect(output).toStrictEqual({
-        id: model.id,
+        id: entity.id,
         name: i.expected.name,
         description: i.expected.description,
         is_active: i.expected.is_active,

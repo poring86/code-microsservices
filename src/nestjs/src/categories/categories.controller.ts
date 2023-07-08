@@ -20,13 +20,14 @@ import {
   GetCategoryUseCase,
 } from '@fc/micro-videos/category/application';
 import { SearchCategoryDto } from './dto/search-category.dto';
+import { CategoryCollectionPresenter, CategoryPresenter } from './presenter/category.presenter';
 
 @Controller('categories')
 export class CategoriesController {
   @Inject(CreateCategoryUseCase.UseCase)
   private createUseCase: CreateCategoryUseCase.UseCase;
 
-  @Inject(CreateCategoryUseCase.UseCase)
+  @Inject(UpdateCategoryUseCase.UseCase)
   private updateUseCase: UpdateCategoryUseCase.UseCase;
 
   @Inject(ListCategoriesUseCase.UseCase)
@@ -39,31 +40,34 @@ export class CategoriesController {
   private getUseCase: GetCategoryUseCase.UseCase;
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.createUseCase.execute(createCategoryDto);
-    // return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const output = await this.createUseCase.execute(createCategoryDto);
+    return new CategoryPresenter(output)
   }
 
   @Get()
-  search(@Query() searchParams: SearchCategoryDto) {
-    return this.listUseCase.execute(searchParams);
-    // return this.categoriesService.findAll();
+  async search(@Query() searchParams: SearchCategoryDto) {
+    const output = await this.listUseCase.execute(searchParams);
+    return new CategoryCollectionPresenter(output);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.getUseCase.execute({ id });
+  async findOne(@Param('id') id: string) {
+    const output = await this.getUseCase.execute({ id });
+    return new CategoryPresenter(output)
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.updateUseCase.execute({
+    const output = await this.updateUseCase.execute({
       id,
       ...updateCategoryDto,
     });
+
+    return new CategoryPresenter(output)
   }
 
   @HttpCode(204)

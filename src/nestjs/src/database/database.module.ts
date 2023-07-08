@@ -8,17 +8,18 @@ import { CONFIG_SCHEMA_TYPE } from 'src/config/config.module';
   imports: [
     SequelizeModule.forRootAsync({
       useFactory: async (config: ConfigService<CONFIG_SCHEMA_TYPE>) => {
-        const models = [CategorySequelize.CategoryModel]
-        if (config.get("DB_VENDOR") === 'sqlite') {
+        const models = [CategorySequelize.CategoryModel];
+        if (config.get('DB_VENDOR') === 'sqlite') {
           return {
             dialect: 'sqlite',
             host: config.get('DB_HOST'),
             models,
             autoLoadModels: config.get('DB_AUTO_LOAD_MODELS'),
-            logging: config.get('DB_LOGGING')
-          }
+            logging: config.get('DB_LOGGING'),
+          };
         }
-        // if (config.get("DB_VENDOR") === 'mysql') {
+
+        // if (config.get('DB_VENDOR') === 'mysql') {
         //   return {
         //     dialect: 'mysql',
         //     host: config.get('DB_HOST'),
@@ -28,14 +29,14 @@ import { CONFIG_SCHEMA_TYPE } from 'src/config/config.module';
         //     port: config.get('DB_PORT'),
         //     models,
         //     autoLoadModels: config.get('DB_AUTO_LOAD_MODELS'),
-        //     logging: config.get('DB_LOGGING')
-        //   }
+        //     logging: config.get('DB_LOGGING'),
+        //   };
         // }
 
-        throw new Error('Unsupported database config')
+        throw new Error('Unsupported database config');
       },
-      inject: [ConfigService]
-    })
-  ]
+      inject: [ConfigService],
+    }),
+  ],
 })
 export class DatabaseModule { }

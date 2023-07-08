@@ -172,6 +172,4 @@ describe("SequelizeModelFactory Unit Tests", () => {
     expect(models[1].name).toBe("test")
     expect(StubModel.mockFactory).toHaveBeenCalledTimes(2)
   })
-
-
 })
