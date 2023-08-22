@@ -1,7 +1,7 @@
 import ClassValidatorFields from "../validators/class-validator-fields";
 import { FieldsErrors } from "../validators/validator-fields-interface";
 // import { objectContaining } from "expect";
-import { EntityValidationError } from "../errors/validation.error";
+import { EntityValidationError } from "#seedwork/domain/errors/validation.error"
 type Expected =
   | { validator: ClassValidatorFields<any>; data: any }
   | (() => any);
@@ -42,10 +42,10 @@ function assertContainsErrorsMessages(
   return isMatch
     ? { pass: true, message: () => "" }
     : {
-        pass: false,
-        message: () =>
-          `The validation errors not contains ${JSON.stringify(
-            received
-          )}. Current: ${JSON.stringify(expected)}`,
-      };
+      pass: false,
+      message: () =>
+        `The validation errors not contains ${JSON.stringify(
+          received
+        )}. Current: ${JSON.stringify(expected)}`,
+    };
 }

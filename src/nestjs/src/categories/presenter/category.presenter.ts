@@ -1,6 +1,7 @@
 import { CategoryOutput, ListCategoriesUseCase } from "@fc/micro-videos/category/application"
-import { Transform } from 'class-transformer'
-import { CollectionPresenter } from "nestjs/src/@share/presenters/collection.presenters"
+import { Exclude, Expose, Transform } from 'class-transformer'
+import { CategoriesService } from "nestjs/src/categories/categories.service";
+
 
 export class CategoryPresenter {
   id: string;
@@ -26,6 +27,40 @@ export type PaginationPresenterProps = {
   total: number
 }
 
+export class PaginationPresenter {
+  @Transform(({ value }) => parseInt(value))
+  current_page: number
+  @Transform(({ value }) => parseInt(value))
+  per_page: number
+  @Transform(({ value }) => parseInt(value))
+  last_page: number
+  @Transform(({ value }) => parseInt(value))
+  total: number
+
+  constructor(props: PaginationPresenterProps) {
+    this.current_page = props.current_page
+    this.per_page = props.per_page
+    this.last_page = props.last_page
+    this.total = props.total
+  }
+}
+
+export abstract class CollectionPresenter {
+  @Exclude()
+  protected paginationPresenter: PaginationPresenter;
+
+  constructor(props: PaginationPresenterProps) {
+    this.paginationPresenter = new PaginationPresenter(props);
+  }
+
+  @Expose({ name: 'meta' })
+  get meta() {
+    return this.paginationPresenter;
+  }
+
+  abstract get data();
+}
+
 
 export class CategoryCollectionPresenter extends CollectionPresenter {
   data: CategoryPresenter[]
@@ -36,3 +71,9 @@ export class CategoryCollectionPresenter extends CollectionPresenter {
     this.data = items.map((item) => new CategoryPresenter(item))
   }
 }
+
+
+
+
+
+

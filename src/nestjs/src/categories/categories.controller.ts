@@ -9,6 +9,7 @@ import {
   Query,
   HttpCode,
   Inject,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -18,6 +19,7 @@ import {
   UpdateCategoryUseCase,
   DeleteCategoryUseCase,
   GetCategoryUseCase,
+  CategoryOutput,
 } from '@fc/micro-videos/category/application';
 import { SearchCategoryDto } from './dto/search-category.dto';
 import { CategoryCollectionPresenter, CategoryPresenter } from './presenter/category.presenter';
@@ -30,19 +32,21 @@ export class CategoriesController {
   @Inject(UpdateCategoryUseCase.UseCase)
   private updateUseCase: UpdateCategoryUseCase.UseCase;
 
-  @Inject(ListCategoriesUseCase.UseCase)
-  private listUseCase: ListCategoriesUseCase.UseCase;
-
   @Inject(DeleteCategoryUseCase.UseCase)
   private deleteUseCase: DeleteCategoryUseCase.UseCase;
 
   @Inject(GetCategoryUseCase.UseCase)
   private getUseCase: GetCategoryUseCase.UseCase;
 
+  @Inject(ListCategoriesUseCase.UseCase)
+  private listUseCase: ListCategoriesUseCase.UseCase;
+
+  //Arquitetura Hexagonal - Ports
+
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     const output = await this.createUseCase.execute(createCategoryDto);
-    return new CategoryPresenter(output)
+    return CategoriesController.categoryToResponse(output);
   }
 
   @Get()
@@ -52,27 +56,34 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     const output = await this.getUseCase.execute({ id });
-    return new CategoryPresenter(output)
+    return CategoriesController.categoryToResponse(output);
   }
 
-  @Put(':id')
+  @Put(':id') //PUT vs PATCH
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     const output = await this.updateUseCase.execute({
       id,
       ...updateCategoryDto,
     });
-
-    return new CategoryPresenter(output)
+    return CategoriesController.categoryToResponse(output);
   }
 
   @HttpCode(204)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     return this.deleteUseCase.execute({ id });
+  }
+
+  static categoryToResponse(output: CategoryOutput) {
+    return new CategoryPresenter(output);
   }
 }

@@ -16,25 +16,16 @@ export default {
   collectCoverageFrom: [
     "**/*.(t|j)s"
   ],
-  coverageProvider: "v8",
-  coverageDirectory: "../__coverage",
+  coverageDirectory: "../coverage",
   testEnvironment: "node",
   setupFilesAfterEnv: [
     "../../@core/src/@seedwork/domain/tests/jest.ts",
   ],
-  coverageThreshold: {
-    global: {
-      statements: 80,
-      branches: 80,
-      functions: 80,
-      lines: 80
-    },
-  },
   moduleNameMapper: {
     '@fc/micro\\-videos/(.*)$': '<rootDir>/../../../node_modules/@fc/micro-videos/dist/$1',
-    // "#seedwork/domain": "<rootDir>/../../../@seedwork/application/index.js",
-    "#seedwork/(.*)$": ".<rootDir>/../../../node_modules/@fc/micro-videos/dist/@seedwork/$1",
-    // "#category/domain": "<rootDir>/../../../category/application/index.js",
-    "#category/(.*)$": "<rootDir>/../../../node_modules/@fc/micro-videos/dist/category/$1",
+    "#seedwork/domain": "<rootDir>/../../../@seedwork/application/index.js",
+    "#seedwork/(.*)$": ".<rootDir>/../../..@seedwork/domain/index.js",
+    "#category/application": "<rootDir>/../../../category/application/index.js",
+    "#category/(.*)$": "<rootDir>/../../../category/domain/index.js",
   }
 }

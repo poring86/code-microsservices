@@ -12,6 +12,7 @@ import { NotFoundError } from "rxjs"
 import { CategoryCollectionPresenter, CategoryPresenter } from "../../../categories/presenter/category.presenter"
 import { Category } from '@fc/micro-videos/category/domain';
 import { SortDirection } from "@fc/micro-videos/dist/@seedwork/domain/repository/repository-contracts"
+import { CategoryFixture } from "nestjs/test/categories/fixtures"
 
 describe('CategoriesController Integration Tests', () => {
   let controller: CategoriesController
@@ -48,61 +49,22 @@ describe('CategoriesController Integration Tests', () => {
   })
 
   describe('should create a category', () => {
-    const arrange = [
-      {
-        request: {
-          name: 'Movie'
-        },
-        expectedPresenter: {
-          name: 'Movie',
-          description: null,
-          is_active: true
-        }
-      },
-      {
-        request: {
-          name: 'Movie',
-          description: null
-        },
-        expectedPresenter: {
-          name: 'Movie',
-          description: null,
-          is_active: true
-        }
-      },
-      {
-        request: {
-          name: 'Movie',
-          is_active: true
-        },
-        expectedPresenter: {
-          name: 'Movie',
-          description: null,
-          is_active: true
-        }
-      }
-    ]
+    const arrange = CategoryFixture.arrangeForSave()
 
     test.each(arrange)(
       'with request $request',
-      async ({ request, expectedPresenter }) => {
-        const presenter = await controller.create(request);
+      async ({ send_data, expected }) => {
+        const presenter = await controller.create(send_data);
         const entity = await repository.findById(presenter.id)
 
-        expect(entity).toMatchObject({
+        expect(entity.toJSON()).toStrictEqual({
           id: presenter.id,
-          name: expectedPresenter.name,
-          description: expectedPresenter.description,
-          is_active: expectedPresenter.is_active,
-          created_at: presenter.created_at
+          created_at: presenter.created_at,
+          ...send_data,
+          ...expected,
         })
 
-        expect(presenter).toBeInstanceOf(CategoryPresenter)
-        expect(presenter.id).toBe(entity.id)
-        expect(presenter.name).toBe(expectedPresenter.name)
-        expect(presenter.description).toBe(expectedPresenter.description)
-        expect(presenter.is_active).toBe(expectedPresenter.is_active)
-        expect(presenter.created_at).toStrictEqual(entity.created_at)
+        expect(presenter).toEqual(new CategoryPresenter(entity))
       }
     )
 
@@ -220,12 +182,6 @@ describe('CategoriesController Integration Tests', () => {
         .withCreatedAt((index) => new Date(new Date().getTime() + index))
         .build();
       await repository.bulkInsert(categories);
-
-      const all = (await repository.findAll()).length
-
-      console.log('all', all)
-
-      console.log('categories', categories)
 
       const arrange = [
         {
